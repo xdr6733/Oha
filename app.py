@@ -58,7 +58,7 @@ class Batuflex:
 
     def is_subscribed(self, user_id):
         # Check subscription for channels: @batutool and channel with id -1002558059383
-        channels = ["@batutool", @ynbatuk]
+        channels = ["@batutool", "@ynbatuk"]
         for channel in channels:
             try:
                 member = self.batuHeker.get_chat_member(channel, user_id)
