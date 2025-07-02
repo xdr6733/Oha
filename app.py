@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-TOKEN = "7880885971:AAH9e56DvZ5oHWriLFpHhUOrUF03y9VeXC8"
+TOKEN = "7880885971:AAFCgjQhfDdwag2Zwer3gdNV8K67cWKL3ZI"
 
 çıkarşuşarkıyıbatuflex = "\033[35m"
 yatak = "\033[36m"
