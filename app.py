@@ -58,7 +58,7 @@ class Batuflex:
 
     def is_subscribed(self, user_id):
         # Check subscription for channels: @batutool and channel with id -1002558059383
-        channels = ["@batutool", "@ynbatuk"]
+        channels = ["@batutool", "@ynbatuk","-1002652756971"]
         for channel in channels:
             try:
                 member = self.batuHeker.get_chat_member(channel, user_id)
@@ -72,8 +72,9 @@ class Batuflex:
         markup = types.InlineKeyboardMarkup(row_width=2)
         btn_batutool = types.InlineKeyboardButton(text="📢  @batutool", url="https://t.me/batutool")
         btn_channel = types.InlineKeyboardButton(text="🌐  Kanal", url="https://t.me/ynbatuk")
+        y = types.InlineKeyboardButton(text="🌐  Kanal", url="https://t.me/+NjsouM_lA5piMGZk")
         btn_check = types.InlineKeyboardButton(text="✅  Kontrol Et", callback_data="check_subscription")
-        markup.row(btn_batutool, btn_channel)
+        markup.row(btn_batutool, btn_channel, y)
         markup.add(btn_check)
         self.batuHeker.send_message(chat_id, "💡 Lütfen aşağıdaki kanallara katılın ve üyelik durumunu kontrol etmek için **Kontrol Et** butonuna basın!", reply_markup=markup)
 
